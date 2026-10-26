@@ -1,0 +1,59 @@
+{% extends 'audio.html' %}
+{% block title %} STEGA | Audio-Encode Result {% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="content-section">
+            <h1 class="display-4 text-monospace">Encode Result</h1>
+            <hr>
+
+            {% if audio_encryption %}
+                <div class="success-message">
+                    <h4>✅ Audio Encoded Successfully!</h4>
+                </div>
+            {% endif %}
+
+            <div class="card bg-light" style="border-radius: 15px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                <div class="container-fluid p-4">
+
+                    {% if file %}
+                        <h5 class="my-2 font-weight-bold">Your Audio:</h5>
+                        <audio controls class="mb-2">
+                            <source src="static/{{ file.filename }}" type="audio/wav">
+                        </audio>
+                    {% else %}
+                        <p class="text-muted">No audio selected</p>
+                        <br>
+                    {% endif %}
+                    <hr>
+
+                    {% if message %}
+                        <h5 class="my-2 font-weight-bold">Your Message:</h5>
+                        <div class="card mb-2" style="border-radius: 10px;">
+                            <div class="card-body">
+                                {{ message }}
+                            </div>
+                        </div>
+                    {% else %}
+                        <p class="text-muted">No message recorded.</p>
+                    {% endif %}
+                    <hr>
+
+                    {% if audio_encryption %}
+                        <h5 class="my-2 font-weight-bold">Encrypted Audio:</h5>
+                        <div class="col">
+                            <a class="btn btn-primary" href="static/{{ file.filename }}" download>Download Encrypted Audio</a>
+                        </div>
+                        <br>
+                    {% else %}
+                        <p class="text-muted">No encryption performed</p>
+                    {% endif %}
+                    <hr>
+
+                    <div>
+                        <a class="btn btn-primary my-2" href="/">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

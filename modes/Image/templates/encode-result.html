@@ -1,0 +1,46 @@
+{% extends 'image.html' %}
+{% block title %} STEGA | Image-Encode Result {% endblock %}
+{% block content %}
+    <div class="container">
+        <div class="content-section">
+            <h1 class="display-4 text-monospace">Encode Result</h1>
+            <hr>
+
+            {% if encryption %}
+                <div class="success-message">
+                    <h4>✅ Image Encoded Successfully!</h4>
+                </div>
+            {% endif %}
+
+            <div class="card bg-light" style="border-radius: 15px; border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                <div class="container-fluid p-4">
+                    {% if file %}
+                        <h5 class="my-3 font-weight-bold">Your original image:</h5>
+                        <img src="static/{{ file.filename }}" class="result-image" />
+                        <br>
+                    {% else %}
+                        <p class="text-muted">No image selected</p>
+                        <br>
+                    {% endif %}
+                    <hr>
+                    {% if encryption %}
+                        <h5 class="my-3 font-weight-bold">Your Encrypted image:</h5>
+                        <div class="col">
+                            <img class="row mb-3 result-image" src="static/encrypted_image.png"/>
+                            <a class="btn btn-primary" href="static/encrypted_image.png" download>Download Encrypted Image</a>
+                        </div>
+                        <br>
+                    {% else %}
+                        <p class="text-muted">Encoding failed</p>
+                        <br>
+                    {% endif %}
+                    <hr>
+                    <div>
+                        <a class="btn btn-primary my-3" href="/">Back to Home</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

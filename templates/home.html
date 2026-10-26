@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEGA | Secure Steganography Platform</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .navbar {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95) !important;
+            backdrop-filter: blur(10px);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .navbar-brand {
+            font-weight: 700;
+            color: #667eea !important;
+            animation: fadeIn 1s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+            color: white;
+            padding: 5rem 2rem;
+            position: relative;
+            overflow: hidden;
+            animation: slideUp 1s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 50%);
+            animation: rotate 20s linear infinite;
+        }
+
+        @keyframes rotate {
+            from {
+                transform: rotate(0deg);
+            }
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-section h1 {
+            font-weight: 700;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            animation: textGlow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes textGlow {
+            from {
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+            }
+            to {
+                text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+            }
+        }
+
+        .hero-section p.lead {
+            font-size: 1.5rem;
+            font-weight: 300;
+            opacity: 0.95;
+        }
+
+        .steganography-info {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 3rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+            margin: 4rem auto;
+            max-width: 900px;
+            animation: scaleIn 0.8s ease-out 0.5s both;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.9);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .steganography-info h2 {
+            color: #667eea;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .steganography-info h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 50%;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .steganography-info p {
+            text-align: justify;
+            color: #555;
+            line-height: 1.8;
+            font-size: 1.05rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .card-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 300px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease-out both;
+        }
+
+        .card:nth-child(1) {
+            animation-delay: 0.2s;
+        }
+
+        .card:nth-child(2) {
+            animation-delay: 0.4s;
+        }
+
+        .card:nth-child(3) {
+            animation-delay: 0.6s;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        }
+
+        .card img {
+            width: 100px;
+            height: 100px;
+            margin-bottom: 1.5rem;
+            transition: transform 0.4s ease;
+        }
+
+        .card:hover img {
+            transform: scale(1.1) rotate(5deg);
+        }
+
+        .card-title {
+            color: #667eea;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .card-text {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+        }
+
+        .btn-custom {
+            border: 2px solid #667eea;
+            color: #667eea;
+            padding: 0.6rem 1.5rem;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-custom::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 0;
+            height: 0;
+            background: #667eea;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            transition: width 0.4s ease, height 0.4s ease;
+        }
+
+        .btn-custom:hover::before {
+            width: 300px;
+            height: 300px;
+        }
+
+        .btn-custom:hover {
+            color: white;
+            border-color: #667eea;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-custom span {
+            position: relative;
+            z-index: 1;
+        }
+
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .shape {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            animation: float 15s infinite;
+        }
+
+        .shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 10%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 70%;
+            left: 80%;
+            animation-delay: 2s;
+        }
+
+        .shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            top: 40%;
+            left: 70%;
+            animation-delay: 4s;
+        }
+
+        .shape:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            top: 80%;
+            left: 20%;
+            animation-delay: 6s;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-section p.lead {
+                font-size: 1.2rem;
+            }
+
+            .card {
+                width: 100%;
+                max-width: 350px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Floating Shapes Background -->
+    <div class="floating-shapes">
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+        <div class="shape"></div>
+    </div>
+
+    <!--Navbar start-->
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <a class="navbar-brand ml-5" href="#">
+            <img src="https://img.icons8.com/color/30/000000/data-encryption.png" class="mr-2"/>
+            <b class="text-monospace">S T E G A</b>
+        </a>
+    </nav>
+    <!--Navbar end-->
+
+    <!--Hero Section start-->
+    <div class="hero-section">
+        <div class="container hero-content">
+            <h1 class="display-4 text-monospace">Send Your Messages Securely!</h1>
+            <p class="lead">By secretly hiding them in Text, Images, and Audio files using the power of Steganography.</p>
+        </div>
+    </div>
+    <!--Hero Section end-->
+
+    <!--Steganography Explanation start-->
+    <div class="container">
+        <div class="steganography-info">
+            <h2 class="text-center">What is Steganography?</h2>
+            <p>
+                Steganography is the practice of concealing a message, image, or file within another message, image, or file. 
+                Unlike cryptography, where the existence of the message is evident but not readable, steganography hides the very existence of the message. 
+                It comes from the Greek words "steganos" (covered) and "graphia" (writing), which literally means "covered writing."
+            </p>
+            <p>
+                The most common use of steganography in the modern digital era is to embed secret data within images, audio, video files, or other file types in such a way that 
+                only the intended recipient knows about the hidden content. This technique is widely used in secure communication, watermarking, and digital forensics.
+            </p>
+            <p>
+                Steganography has been used for centuries for covert communication, but with today's technology, its applications have grown. Whether you need to hide 
+                confidential data or share sensitive information securely, steganography offers a creative and effective solution.
+            </p>
+        </div>
+    </div>
+    <!--Steganography Explanation end-->
+
+    <!--Cards Section start-->
+    <div class="container">
+        <div class="card-container">
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/000000/document.png" alt="Text to Image"/>
+                <div class="card-body">
+                    <h4 class="card-title text-monospace">TEXT ➡️ IMAGE</h4>
+                    <p class="card-text">Embed a secret text message within an image file. The text is hidden in the pixel values of the image, ensuring that the image appears unchanged.</p>
+                    <div class="btn-group">
+                        <a href="/text/encode" class="btn btn-custom"><span>Encode</span></a>
+                        <a href="/text/decode" class="btn btn-custom"><span>Decode</span></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/000000/full-image.png" alt="Image to Image"/>
+                <div class="card-body">
+                    <h4 class="card-title text-monospace">IMAGE ➡️ IMAGE</h4>
+                    <p class="card-text">Transfer hidden data from one image to another. This allows for embedding messages in the least significant bits of pixels in the cover image.</p>
+                    <div class="btn-group">
+                        <a href="/image/encode" class="btn btn-custom"><span>Encode</span></a>
+                        <a href="/image/decode" class="btn btn-custom"><span>Decode</span></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <img src="https://img.icons8.com/color/96/000000/high-volume.png" alt="Text to Audio"/>
+                <div class="card-body">
+                    <h4 class="card-title text-monospace">TEXT ➡️ AUDIO</h4>
+                    <p class="card-text">Hide a text message within an audio file. This is achieved by altering the audio waves in a way that remains imperceptible to the human ear.</p>
+                    <div class="btn-group">
+                        <a href="/audio/encode" class="btn btn-custom"><span>Encode</span></a>
+                        <a href="/audio/decode" class="btn btn-custom"><span>Decode</span></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Cards Section end-->
+
+</body>
+</html>
+
+<!--Bootstrap-->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+crossorigin="anonymous"></script>
