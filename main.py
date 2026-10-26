@@ -16,7 +16,7 @@ AUDIO_CACHE_FOLDER = 'modes/Audio/__pycache__'
 # ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg'}
 
 app = Flask(__name__)
-app.secret_key = "hello"
+app.secret_key = os.environ.get('SECRET_KEY', 'hello')
 app.config['UPLOAD_IMAGE_FOLDER'] = UPLOAD_IMAGE_FOLDER
 app.config['IMAGE_CACHE_FOLDER'] = IMAGE_CACHE_FOLDER
 app.config['UPLOAD_TEXT_FOLDER'] = UPLOAD_TEXT_FOLDER
